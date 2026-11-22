@@ -35,10 +35,17 @@ def ticTacToe(): Unit = {
 
       if(!skipRound) {
         val playerWon = checkWinner(true)
-        if(playerWon){
+        if (playerWon)
           println("You won")
           continueGame = false
-        } else {
+
+        var boardFull = checkBoardFull();
+        if (boardFull && !playerWon){
+          println("It's a tie")
+          continueGame = false
+        }
+
+        if(continueGame)
           placeComputeMove()
           printBoard()
           val computerWon = checkWinner(false)
@@ -46,7 +53,7 @@ def ticTacToe(): Unit = {
             println("You lose, computer won")
             continueGame = false
           }
-        }
+
       }
     }catch {
       case e: Exception => println("Invalid input, please try again")
@@ -100,4 +107,16 @@ def checkWinner(player: Boolean): Boolean = {
       won = true
     }
   return won
+}
+
+def checkBoardFull(): Boolean = {
+  var isBoardFull = false
+    for (i <- 0 to 2) {
+      for (j <- 0 to 2) {
+        if(board(i)(j) == ""){
+          isBoardFull = false
+        }
+      }
+    }
+  return isBoardFull
 }
